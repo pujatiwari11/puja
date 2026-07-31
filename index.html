@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puja Tiwari - Data Engineer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #1f1f3f;
+            background: linear-gradient(135deg, #ffd6e8 0%, #c8b6ff 25%, #a8d8ff 50%, #ffc8e3 75%, #ffd6e8 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 15% 85%, rgba(255, 105, 180, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 85% 15%, rgba(138, 43, 226, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(0, 191, 255, 0.08) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        header {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 240, 250, 0.9) 100%);
+            backdrop-filter: blur(15px);
+            border-bottom: 3px solid;
+            border-image: linear-gradient(90deg, #ff1493, #8a2be2, #00bfff) 1;
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 8px 32px rgba(255, 105, 180, 0.15);
+        }
+
+        nav {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ff1493 0%, #8a2be2 50%, #00bfff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #5a3d7a;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            font-weight: 700;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #ff1493;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #ff1493, #8a2be2);
+            border-radius: 2px;
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .hero {
+            margin-bottom: 5rem;
+            text-align: center;
+            padding: 3rem 2rem;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 105, 180, 0.2);
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ff1493 0%, #8a2be2 50%, #00bfff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
+            font-weight: 900;
+            letter-spacing: -1px;
+            text-transform: uppercase;
+        }
+
+        .profile-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 2rem;
+            border: 4px solid;
+            border-image: linear-gradient(135deg, #ff1493, #8a2be2, #00bfff) 1;
+            object-fit: cover;
+            box-shadow: 0 12px 30px rgba(255, 20, 147, 0.3);
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #ffc0cb 0%, #e6ccff 100%);
+            color: #8a2be2;
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            border: 3px solid rgba(255, 20, 147, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hero .subtitle {
+            font-size: 1.25rem;
+            color: #4a3d6a;
+            margin-bottom: 2.5rem;
+            max-width: 800px;
+            line-height: 2;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 600;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .cta-button {
+            padding: 1.1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 800;
+            border: 3px solid;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .cta-button.primary {
+            background: linear-gradient(135deg, #ff1493 0%, #8a2be2 100%);
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 12px 30px rgba(255, 20, 147, 0.4);
+        }
+
+        .cta-button.primary:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 40px rgba(255, 20, 147, 0.6);
+        }
+
+        .cta-button.secondary {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 240, 250, 0.95) 100%);
+            color: #ff1493;
+            border-color: #ff1493;
+        }
+
+        .cta-button.secondary:hover {
+            background: #ffc0cb;
+            transform: translateY(-4px);
+        }
+
+        section {
+            margin: 5rem 0;
+        }
+
+        h2 {
+            font-size: 2.3rem;
+            margin-bottom: 3rem;
+            color: #1f1f3f;
+            font-weight: 900;
+            text-align: center;
+            position: relative;
+            padding-bottom: 1.5rem;
+            letter-spacing: -0.5px;
+            text-transform: uppercase;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 5px;
+            background: linear-gradient(90deg, #ff1493, #8a2be2, #00bfff);
+            border-radius: 3px;
+        }
+
+        .project-case-study {
+            background: rgba(255, 255, 255, 0.95);
+            border: 3px solid rgba(255, 105, 180, 0.2);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 12px 40px rgba(138, 43, 226, 0.12);
+        }
+
+        .project-case-study:hover {
+            border-color: #ff1493;
+            transform: translateY(-6px);
+            box-shadow: 0 20px 50px rgba(138, 43, 226, 0.18);
+        }
+
+        .project-header {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .project-icon {
+            font-size: 3.5rem;
+            min-width: 80px;
+        }
+
+        .project-title h3 {
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, #ff1493 0%, #8a2be2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-subtitle {
+            color: #666;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .project-description {
+            color: #4a3d6a;
+            font-size: 1rem;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+
+        .project-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(255, 192, 203, 0.3) 0%, rgba(230, 204, 255, 0.3) 100%);
+            border-radius: 15px;
+        }
+
+        .metric {
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ff1493 0%, #8a2be2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: #4a3d6a;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tech-stack {
+            display: flex;
+            gap: 0.7rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .tech-tag {
+            background: linear-gradient(135deg, #ffc0cb 0%, #e6ccff 100%);
+            color: #8a2be2;
+            padding: 0.45rem 1.1rem;
+            border-radius: 25px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            border: 2px solid rgba(255, 20, 147, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .project-link {
+            display: inline-block;
+            color: #ff1493;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 0.95rem;
+            border: 2px solid #ff1493;
+            padding: 0.7rem 1.5rem;
+            border-radius: 25px;
+            transition: all 0.3s;
+            margin-right: 1rem;
+        }
+
+        .project-link:hover {
+            background: #ff1493;
+            color: white;
+        }
+
+        .cert-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .cert-card {
+            background: linear-gradient(135deg, rgba(255, 105, 180, 0.15) 0%, rgba(138, 43, 226, 0.15) 100%);
+            border: 3px solid rgba(138, 43, 226, 0.3);
+            padding: 2rem;
+            border-radius: 20px;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .cert-card:hover {
+            border-color: #8a2be2;
+            transform: translateY(-6px);
+            box-shadow: 0 15px 40px rgba(138, 43, 226, 0.2);
+        }
+
+        .cert-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .cert-card h3 {
+            font-size: 1.1rem;
+            color: #8a2be2;
+            margin-bottom: 0.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .cert-card p {
+            color: #4a3d6a;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .highlight {
+            color: #ff1493;
+            font-weight: 900;
+        }
+
+        .about-card {
+            background: rgba(255, 255, 255, 0.95);
+            border: 3px solid rgba(255, 105, 180, 0.2);
+            padding: 3rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 12px 40px rgba(138, 43, 226, 0.1);
+        }
+
+        .about-card p {
+            color: #4a3d6a;
+            margin-bottom: 1.8rem;
+            line-height: 2;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        footer {
+            border-top: 3px solid;
+            border-image: linear-gradient(90deg, #ff1493, #8a2be2, #00bfff) 1;
+            padding: 4rem 2rem;
+            text-align: center;
+            color: #5a3d7a;
+            font-size: 0.95rem;
+            margin-top: 5rem;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            font-weight: 600;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #ff1493;
+            text-decoration: none;
+            font-weight: 900;
+            transition: all 0.3s;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        .footer-links a:hover {
+            color: #8a2be2;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .profile-photo {
+                width: 120px;
+                height: 120px;
+            }
+
+            .hero h1 {
+                font-size: 2.3rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.05rem;
+            }
+
+            .nav-links {
+                gap: 1.5rem;
+                font-size: 0.85rem;
+            }
+
+            .project-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .project-metrics {
+                grid-template-columns: 1fr;
+            }
+
+            main {
+                padding: 2rem 1rem;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+            }
+
+            .cert-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/" class="logo">Puja 👩‍💻✨</a>
+            <ul class="nav-links">
+                <li><a href="#work">Featured Work</a></li>
+                <li><a href="#certs">Certificates</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero -->
+        <section class="hero">
+            <img src="profile.jpg" alt="Puja Tiwari" class="profile-photo">
+            <div class="hero-badge">✨ Data Engineer 🚀</div>
+            <h1>Puja Tiwari</h1>
+            <p class="subtitle">Building scalable data systems with <span class="highlight">FastAPI</span>, <span class="highlight">Docker</span>, and <span class="highlight">PostgreSQL</span>. Turning data into insights.</p>
+            <div class="cta-buttons">
+                <a href="#work" class="cta-button primary">See My Work</a>
+                <a href="mailto:pujaofficialdata@gmail.com" class="cta-button secondary">Get In Touch</a>
+            </div>
+        </section>
+
+        <!-- Featured Work -->
+        <section id="work">
+            <h2>Featured Work</h2>
+
+            <div class="project-case-study">
+                <div class="project-header">
+                    <div class="project-icon">⚡</div>
+                    <div class="project-title">
+                        <h3>FastAPI Microservices Platform</h3>
+                        <p class="project-subtitle">High-Performance Data API</p>
+                    </div>
+                </div>
+                
+                <p class="project-description">
+                    Built a production-grade microservices platform using FastAPI to handle complex data ingestion and transformation workflows. Designed CSV upload pipelines with robust validation, implemented error handling, and created RESTful APIs for seamless data operations. The system processes multiple data sources reliably and scales to handle high-volume requests.
+                </p>
+
+                <div class="project-metrics">
+                    <div class="metric">
+                        <div class="metric-value">5M+</div>
+                        <div class="metric-label">Records Processed</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">< 200ms</div>
+                        <div class="metric-label">API Response Time</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">99.9%</div>
+                        <div class="metric-label">Uptime</div>
+                    </div>
+                </div>
+
+                <div class="tech-stack">
+                    <span class="tech-tag">FastAPI</span>
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">PostgreSQL</span>
+                    <span class="tech-tag">Docker</span>
+                </div>
+            </div>
+
+            <div class="project-case-study">
+                <div class="project-header">
+                    <div class="project-icon">🗺️</div>
+                    <div class="project-title">
+                        <h3>Spatial Data Transformations</h3>
+                        <p class="project-subtitle">Geospatial Analysis & Validation</p>
+                    </div>
+                </div>
+                
+                <p class="project-description">
+                    Developed sophisticated geospatial analysis tools for coordinate transformations and site validation. Implemented UTM/WGS84 conversions, polygon validation logic, and spatial queries using PostGIS. This solution enables accurate geological surveying and site analysis for mining operations, ensuring data integrity across multiple coordinate systems.
+                </p>
+
+                <div class="project-metrics">
+                    <div class="metric">
+                        <div class="metric-value">10+</div>
+                        <div class="metric-label">Mining Sites Analyzed</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">100%</div>
+                        <div class="metric-label">Accuracy Rate</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">15 min</div>
+                        <div class="metric-label">Processing Time</div>
+                    </div>
+                </div>
+
+                <div class="tech-stack">
+                    <span class="tech-tag">PostGIS</span>
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">PostgreSQL</span>
+                    <span class="tech-tag">Spatial Analysis</span>
+                </div>
+            </div>
+
+            <div class="project-case-study">
+                <div class="project-header">
+                    <div class="project-icon">🐳</div>
+                    <div class="project-title">
+                        <h3>Containerized Deployment Pipeline</h3>
+                        <p class="project-subtitle">CI/CD on Google Cloud Platform</p>
+                    </div>
+                </div>
+                
+                <p class="project-description">
+                    Architected and deployed containerized applications on Google Cloud Platform using Docker and Cloud Build. Implemented automated CI/CD pipelines for continuous integration and deployment, enabling rapid iteration and reliable releases. Set up infrastructure monitoring, logging, and auto-scaling to ensure system reliability in production.
+                </p>
+
+                <div class="project-metrics">
+                    <div class="metric">
+                        <div class="metric-value">5x</div>
+                        <div class="metric-label">Faster Deployments</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">0 mins</div>
+                        <div class="metric-label">Manual Deployment Time</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">100%</div>
+                        <div class="metric-label">Automated Testing</div>
+                    </div>
+                </div>
+
+                <div class="tech-stack">
+                    <span class="tech-tag">Docker</span>
+                    <span class="tech-tag">Google Cloud</span>
+                    <span class="tech-tag">Cloud Build</span>
+                    <span class="tech-tag">CI/CD</span>
+                </div>
+            </div>
+
+            <div class="project-case-study">
+                <div class="project-header">
+                    <div class="project-icon">🧪</div>
+                    <div class="project-title">
+                        <h3>Data Quality & Validation Framework</h3>
+                        <p class="project-subtitle">Testing & Reliability Systems</p>
+                    </div>
+                </div>
+                
+                <p class="project-description">
+                    Created a comprehensive testing and validation framework to ensure data integrity across all systems. Implemented unit tests, integration tests, and data quality checks. Built automated validation pipelines that catch errors early, preventing bad data from flowing into production systems. This framework significantly reduced bugs and improved system reliability.
+                </p>
+
+                <div class="project-metrics">
+                    <div class="metric">
+                        <div class="metric-value">95%</div>
+                        <div class="metric-label">Bug Detection Rate</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">50%</div>
+                        <div class="metric-label">Issue Reduction</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">Automated</div>
+                        <div class="metric-label">All Validations</div>
+                    </div>
+                </div>
+
+                <div class="tech-stack">
+                    <span class="tech-tag">Python Testing</span>
+                    <span class="tech-tag">FastAPI</span>
+                    <span class="tech-tag">PostgreSQL</span>
+                    <span class="tech-tag">Validation</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Certificates -->
+        <section id="certs">
+            <h2>Certificates</h2>
+            <div class="cert-grid">
+                <div class="cert-card">
+                    <div class="cert-icon">🏆</div>
+                    <h3>ISTQB Foundation</h3>
+                    <p>International Software Testing Qualifications Board - Foundation Level Certification</p>
+                </div>
+
+                <div class="cert-card">
+                    <div class="cert-icon">🎯</div>
+                    <h3>ISTQB Agile Tester</h3>
+                    <p>Certified Agile Software Tester - Advanced Level Testing Certification</p>
+                </div>
+
+                <div class="cert-card">
+                    <div class="cert-icon">📊</div>
+                    <h3>Data Analytics Bootcamp</h3>
+                    <p>University of Western Australia (UWA) - Feb 2024 - Intensive Full-Stack Data Analytics</p>
+                </div>
+
+                <div class="cert-card">
+                    <div class="cert-icon">☁️</div>
+                    <h3>Accenture Data Analytics Forage</h3>
+                    <p>October 2023 - Data Analytics Virtual Internship Program</p>
+                </div>
+            </div>
+        </section>
+
+
+
+        <!-- About -->
+        <section>
+            <h2>About</h2>
+            <div class="about-card">
+                <p>I'm a passionate data engineer dedicated to building robust, scalable systems that drive real business value. My expertise spans the entire data stack—from APIs and microservices to cloud infrastructure and spatial analysis. I believe in writing clean, testable code and creating systems that are reliable, maintainable, and performant.</p>
+                <p>I completed an intensive Data Analytics Bootcamp at UWA in 2024 and made the transition from QA Engineering to data engineering, bringing my quality-first mindset to infrastructure development. I'm committed to continuous learning and staying current with modern data engineering practices.</p>
+                <p>Currently, I work with FastAPI, Docker, PostgreSQL, and Google Cloud Platform to build data systems that solve real problems. When I'm not coding, I'm exploring new technologies and contributing to projects that make a difference.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer id="contact">
+        <div class="footer-links">
+            <a href="https://github.com/pujatiwari11">GitHub</a>
+            <a href="https://www.linkedin.com/in/puja-tiwari-073075296/">LinkedIn</a>
+            <a href="mailto:pujaofficialdata@gmail.com">Email</a>
+        </div>
+        <p>Puja Tiwari • Perth, WA • © 2025</p>
+    </footer>
+</body>
+</html>
